@@ -31,16 +31,16 @@ char** introFrame(char **frame){
 
 char** creditsFrame(char **frame){
 	frame = (char**)malloc(sizeof(char)*16*150);
-	frame[0] = "                     .o.                            oooo                                                                                              ";
-	frame[1] = "                    .888.                           `888                                                                                              ";
-	frame[2] = "                   .8\"888.     ooo. .oo.    .oooo.o  888 .oo.   oooo  oooo  ooo. .oo.  .oo.    .oooo.   ooo. .oo.                                     ";
-	frame[3] = "                  .8' `888.    `888P\"Y88b  d88(  \"8  888P\"Y88b  `888  `888  `888P\"Y88bP\"Y88b  `P  )88b  `888P\"Y88b                                    ";
-	frame[4] = "                 .88ooo8888.    888   888  `\"Y88b.   888   888   888   888   888   888   888   .oP\"888   888   888                                    ";
-	frame[5] = "                .8'     `888.   888   888  o.  )88b  888   888   888   888   888   888   888  d8(  888   888   888                                    ";
-	frame[6] = "               o88o     o8888o o888o o888o 8\"\"888P' o888o o888o  `V88V\"V8P' o888o o888o o888o `Y888\"\"8o o888o o888o                                   ";
-	frame[7] = "                                                                            oooooooooo.                .o8                                            ";
-	frame[8] = "                                                                            `888'   `Y8b              \"888                                            ";
-	frame[9] = "                                                                             888      888 oooo  oooo   888oooo.   .ooooo.  oooo    ooo                ";
+	frame[0]  = "                     .o.                            oooo                                                                                              ";
+	frame[1]  = "                    .888.                           `888                                                                                              ";
+	frame[2]  = "                   .8\"888.     ooo. .oo.    .oooo.o  888 .oo.   oooo  oooo  ooo. .oo.  .oo.    .oooo.   ooo. .oo.                                     ";
+	frame[3]  = "                  .8' `888.    `888P\"Y88b  d88(  \"8  888P\"Y88b  `888  `888  `888P\"Y88bP\"Y88b  `P  )88b  `888P\"Y88b                                    ";
+	frame[4]  = "                 .88ooo8888.    888   888  `\"Y88b.   888   888   888   888   888   888   888   .oP\"888   888   888                                    ";
+	frame[5]  = "                .8'     `888.   888   888  o.  )88b  888   888   888   888   888   888   888  d8(  888   888   888                                    ";
+	frame[6]  = "               o88o     o8888o o888o o888o 8\"\"888P' o888o o888o  `V88V\"V8P' o888o o888o o888o `Y888\"\"8o o888o o888o                                   ";
+	frame[7]  = "                                                                            oooooooooo.                .o8                                            ";
+	frame[8]  = "                                                                            `888'   `Y8b              \"888                                            ";
+	frame[9]  = "                                                                             888      888 oooo  oooo   888oooo.   .ooooo.  oooo    ooo                ";
 	frame[10] = "                                                                             888      888 `888  `888   d88' `88b d88' `88b  `88.  .8'                 ";
 	frame[11] = "                                                                             888      888  888   888   888   888 888ooo888   `88..8'                  ";
 	frame[12] = "                                                                             888     d88'  888   888   888   888 888    .o    `888'                   ";
@@ -51,7 +51,7 @@ char** creditsFrame(char **frame){
 }
 
 
-char * newLine(char* lastLine, char* permanentLine, char* newLine, int density, int scarcity, int i) {
+char * newLine(char* lastLine, char* permanentLine, char* newLine, int continuity, int birth, int i) {
 	int j;
 	char character;
 	for (int j = 0; j < LINESIZE; j++){
@@ -61,13 +61,13 @@ char * newLine(char* lastLine, char* permanentLine, char* newLine, int density, 
 			newLine[j] = permanentLine[j];
 		}
 		else if (lastLine[j] == ' '){
-			if (rand()%100 < (100-(density+scarcity)))
+			if (rand()%100 < birth)
 				newLine[j] = character;
 			else
 				newLine[j] = ' ';
 		}
 		else{
-			if (rand() % 100 < density)
+			if (rand() % 100 < continuity)
 				newLine[j] = character;
 			else
 				newLine[j] = ' ';
@@ -79,12 +79,12 @@ char * newLine(char* lastLine, char* permanentLine, char* newLine, int density, 
 
 int main()
 {
+	printf("Shall we begin?");
+    scanf("%*c");
     system("title MATRIX");
     system("color 04");
     system("mode 150, 35");
 
-    printf("Shall we begin?");
-    scanf("%*c");
     printf("\n\n\n");
     char *s1, *s2;
     int i, j;
@@ -100,7 +100,7 @@ int main()
     //printf("2\n");
     for (i = 0; i < 15; ++i)
     {
-    	s2 = newLine(s1, intro[i], s2, 2, 96, i);
+    	s2 = newLine(s1, intro[i], s2, 2, 1, i);
         Sleep(200);
         printf("%s", s2);
         strcpy(s1,s2);
@@ -109,22 +109,15 @@ int main()
 
     for(i = 0; i < 20; i++)
     {
-        s2 = newLine(s1, NULL, s2, 95, (10-i), i);
-        Sleep(40);
+        s2 = newLine(s1, NULL, s2, 95, i%5, i);
+        Sleep(200-(i*8));
         printf("%s", s2);
         strcpy(s1,s2);
     }
-    //Constructing s1
-
-
-    // createFrame(s1, frame);
-    // printFrame(frame);
-
-    //Constructing s2 based on s1
-
+   
     for(i = 0; i < 9000; i++)
     {
-        s2 = newLine(s1, NULL, s2, 85, 10, i);
+        s2 = newLine(s1, NULL, s2, 85, 5, i);
         Sleep(40);
         printf("%s", s2);
         strcpy(s1,s2);
